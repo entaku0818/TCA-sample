@@ -15,7 +15,6 @@ struct TodoView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // タスク入力部分
                 VStack(spacing: 16) {
                     HStack {
                         TextField("新しいタスク", text: $store.newTodoTitle)
@@ -31,7 +30,6 @@ struct TodoView: View {
                         .disabled(store.newTodoTitle.isEmpty)
                     }
                     
-                    // フィルターセクション
                     HStack {
                         Toggle("完了済みのみ表示", isOn: $store.filterCompleted)
                             .tint(.green)
@@ -53,11 +51,9 @@ struct TodoView: View {
                 .zIndex(1)
                 .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
                 
-                // タスクリスト部分
                 if store.filteredTodos.isEmpty {
                     VStack(spacing: 20) {
                         if store.todos.isEmpty {
-                            // タスクが一つもない場合
                             Image(systemName: "checkmark.circle.badge.plus")
                                 .font(.system(size: 60))
                                 .foregroundColor(.gray.opacity(0.3))
@@ -116,7 +112,6 @@ struct TodoView: View {
     }
 }
 
-// Todoアイテムのビュー
 struct TodoItemView: View {
     let todo: Todo
     let onToggle: () -> Void
