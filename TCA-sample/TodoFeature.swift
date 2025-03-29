@@ -55,11 +55,16 @@ struct TodoFeature {
                 )
                 state.newTodoTitle = ""
                 return .none
+                
             case let .view(.todoCheckboxToggled(id)):
                 if let index = state.todos.index(id: id) {
-                    state.todos[index].isCompleted.toggle()
+                    var updatedTodo = state.todos[index]
+                    updatedTodo.isCompleted.toggle()
+                    
+                    state.todos[id: id] = updatedTodo
                 }
                 return .none
+                
             case let .view(.deleteTodoButtonTapped(id)):
                 state.todos.remove(id: id)
                 return .none
