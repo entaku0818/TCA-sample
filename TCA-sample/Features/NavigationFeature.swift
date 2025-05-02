@@ -16,7 +16,7 @@ public struct NavigationFeature {
         case binding(BindingAction<State>)
         case view(View)
         
-        public enum View: Equatable {
+        public enum View: Equatable, Sendable {
             case titleChanged(String)
         }
     }
