@@ -1,6 +1,7 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: MainFeature.self)
 struct MainView: View {
     @Bindable var store: StoreOf<MainFeature>
     
@@ -29,7 +30,7 @@ struct MainView: View {
                                 Spacer()
                                 
                                 Button("すべてを見る") {
-                                    store.send(.view(.viewAllTapped(list.id)))
+                                    send(.viewAllTapped(list.id))
                                 }
                                 .font(.subheadline)
                             }
@@ -50,14 +51,14 @@ struct MainView: View {
                     }
                 }
             }
-        }
-        .navigationDestination(
-            store: store.scope(
-                state: \.$detail,
-                action: \.detail
-            )
-        ) { store in
-            DetailView(store: store)
+            .navigationDestination(
+                store: store.scope(
+                    state: \.$detail,
+                    action: \.detail
+                )
+            ) { store in
+                DetailView(store: store)
+            }
         }
     }
 } 
