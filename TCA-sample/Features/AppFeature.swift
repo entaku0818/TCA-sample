@@ -12,12 +12,13 @@ public struct AppFeature {
         }
     }
     
+    @ViewAction(for: AppFeature.self)
     public enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
         case main(MainFeature.Action)
         
-        public enum View: Equatable {
+        public enum View: Equatable, Sendable {
         }
     }
     

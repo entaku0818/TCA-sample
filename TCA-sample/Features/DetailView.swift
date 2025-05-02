@@ -2,7 +2,7 @@ import SwiftUI
 import ComposableArchitecture
 
 public struct DetailView: View {
-    let store: StoreOf<DetailFeature>
+    @Bindable var store: StoreOf<DetailFeature>
     
     public init(store: StoreOf<DetailFeature>) {
         self.store = store
