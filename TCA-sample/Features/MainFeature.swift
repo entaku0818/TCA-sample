@@ -7,7 +7,7 @@ public struct MainFeature {
     public struct State: Equatable {
         public var navigation: NavigationFeature.State
         public var items: [String]
-        public var detail: DetailFeature.State?
+        @Presents public var detail: DetailFeature.State?
         
         public init(
             navigation: NavigationFeature.State = .init(),
@@ -24,7 +24,7 @@ public struct MainFeature {
         case binding(BindingAction<State>)
         case view(View)
         case navigation(NavigationFeature.Action)
-        case detail(DetailFeature.Action)
+        case detail(PresentationAction<DetailFeature.Action>)
         
         public enum View: Equatable {
             case viewAllTapped
@@ -61,7 +61,7 @@ public struct MainFeature {
                 return .none
             }
         }
-        .ifLet(\.detail, action: /Action.detail) {
+        .ifLet(\.$detail, action: /Action.detail) {
             DetailFeature()
         }
     }

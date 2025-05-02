@@ -30,12 +30,9 @@ public struct MainView: View {
                 .padding()
             }
             .navigationDestination(
-                store: store.scope(
-                    state: \.detail,
-                    action: MainFeature.Action.detail
-                )
-            ) { detailStore in
-                DetailView(store: detailStore)
+                item: store.scope(state: \.$detail, action: { .detail($0) })
+            ) { store in
+                DetailView(store: store)
             }
         }
     }
