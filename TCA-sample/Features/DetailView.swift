@@ -1,18 +1,19 @@
 import SwiftUI
 import ComposableArchitecture
 
-public struct DetailView: View {
+@ViewAction(for: DetailFeature.self)
+struct DetailView: View {
     @Bindable var store: StoreOf<DetailFeature>
     
-    public init(store: StoreOf<DetailFeature>) {
+     init(store: StoreOf<DetailFeature>) {
         self.store = store
     }
     
-    public var body: some View {
+     var body: some View {
         List {
             ForEach(store.items, id: \.self) { item in
                 Button {
-                    store.send(.view(.itemTapped(item)))
+                    send(.itemTapped(item))
                 } label: {
                     Text(item)
                 }

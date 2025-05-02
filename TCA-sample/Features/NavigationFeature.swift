@@ -18,7 +18,6 @@ public struct NavigationFeature {
         case binding(BindingAction<State>)
         case view(View)
         
-        @ViewAction(for: NavigationFeature.self)
         public enum View: Equatable, Sendable {
             case editButtonTapped
             case saveButtonTapped

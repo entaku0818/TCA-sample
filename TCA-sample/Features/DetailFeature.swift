@@ -19,7 +19,6 @@ public struct DetailFeature {
         case view(View)
         case dismiss
         
-        @ViewAction(for: DetailFeature.self)
         public enum View: Equatable {
             case itemTapped(String)
         }

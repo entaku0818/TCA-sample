@@ -1,14 +1,15 @@
 import SwiftUI
 import ComposableArchitecture
 
-public struct AppView: View {
+@ViewAction(for: AppFeature.self)
+struct AppView: View {
     @Bindable var store: StoreOf<AppFeature>
     
-    public init(store: StoreOf<AppFeature>) {
+    init(store: StoreOf<AppFeature>) {
         self.store = store
     }
     
-    public var body: some View {
+    var body: some View {
         MainView(
             store: store.scope(
                 state: \.main,

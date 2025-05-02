@@ -2,14 +2,14 @@ import SwiftUI
 import ComposableArchitecture
 
 @ViewAction(for: MainFeature.self)
-public struct MainView: View {
+ struct MainView: View {
     @Bindable var store: StoreOf<MainFeature>
     
-    public init(store: StoreOf<MainFeature>) {
+     init(store: StoreOf<MainFeature>) {
         self.store = store
     }
     
-    public var body: some View {
+     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
@@ -30,7 +30,7 @@ public struct MainView: View {
                                 Spacer()
                                 
                                 Button("すべてを見る") {
-                                    store.send(.view(.viewAllTapped(list.id)))
+                                    send(.viewAllTapped(list.id))
                                 }
                                 .font(.subheadline)
                             }

@@ -1,14 +1,15 @@
 import SwiftUI
 import ComposableArchitecture
 
-public struct NavigationView: View {
+@ViewAction(for: NavigationFeature.self)
+struct NavigationView: View {
     @Bindable var store: StoreOf<NavigationFeature>
     
-    public init(store: StoreOf<NavigationFeature>) {
+    init(store: StoreOf<NavigationFeature>) {
         self.store = store
     }
     
-    public var body: some View {
+    var body: some View {
         if store.isEditing {
             HStack {
                 TextField("タイトル", text: $store.title)
