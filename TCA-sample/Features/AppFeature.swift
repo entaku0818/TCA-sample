@@ -1,6 +1,9 @@
 import ComposableArchitecture
+import SwiftUI
 
-public struct AppFeature: Reducer {
+@Reducer
+public struct AppFeature {
+    @ObservableState
     public struct State: Equatable {
         public var main: MainFeature.State
         
@@ -9,13 +12,20 @@ public struct AppFeature: Reducer {
         }
     }
     
-    public enum Action: Equatable {
+    public enum Action: ViewAction, BindableAction, Sendable {
+        case binding(BindingAction<State>)
+        case view(View)
         case main(MainFeature.Action)
+        
+        public enum View: Equatable {
+        }
     }
     
     public init() {}
     
     public var body: some ReducerOf<Self> {
+        BindingReducer()
+        
         Scope(state: \.main, action: /Action.main) {
             MainFeature()
         }
