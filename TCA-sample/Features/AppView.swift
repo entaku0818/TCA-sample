@@ -1,7 +1,6 @@
 import SwiftUI
 import ComposableArchitecture
 
-@ViewAction(for: AppFeature.self)
 struct AppView: View {
     @Bindable var store: StoreOf<AppFeature>
     

@@ -2,32 +2,32 @@ import ComposableArchitecture
 import SwiftUI
 
 @Reducer
-public struct NavigationFeature {
+struct NavigationFeature {
     @ObservableState
-    public struct State: Equatable {
-        public var title: String
-        public var isEditing: Bool
+    struct State: Equatable {
+        var title: String
+        var isEditing: Bool
         
-        public init(title: String = "Navigation", isEditing: Bool = false) {
+        init(title: String = "Navigation", isEditing: Bool = false) {
             self.title = title
             self.isEditing = isEditing
         }
     }
     
-    public enum Action: ViewAction, BindableAction, Sendable {
+    enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
         
-        public enum View: Equatable, Sendable {
+        enum View: Equatable, Sendable {
             case editButtonTapped
             case saveButtonTapped
             case cancelButtonTapped
         }
     }
     
-    public init() {}
+    init() {}
     
-    public var body: some ReducerOf<Self> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in

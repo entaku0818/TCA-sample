@@ -2,31 +2,31 @@ import ComposableArchitecture
 import SwiftUI
 
 @Reducer
-public struct DetailFeature {
+struct DetailFeature {
     @ObservableState
-    public struct State: Equatable {
-        public var items: [String]
-        public var title: String
+    struct State: Equatable {
+        var items: [String]
+        var title: String
         
-        public init(items: [String], title: String = "詳細") {
+        init(items: [String], title: String = "詳細") {
             self.items = items
             self.title = title
         }
     }
     
-    public enum Action: ViewAction, BindableAction, Sendable {
+    enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
-        case dismiss
         
-        public enum View: Equatable {
+        enum View: Equatable {
             case itemTapped(String)
+            case dismissButtonTapped
         }
     }
     
-    public init() {}
+    init() {}
     
-    public var body: some ReducerOf<Self> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in
@@ -37,7 +37,7 @@ public struct DetailFeature {
             case .view(.itemTapped):
                 return .none
                 
-            case .dismiss:
+            case .view(.dismissButtonTapped):
                 return .none
             }
         }

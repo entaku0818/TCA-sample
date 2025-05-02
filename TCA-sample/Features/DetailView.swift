@@ -5,15 +5,15 @@ import ComposableArchitecture
 struct DetailView: View {
     @Bindable var store: StoreOf<DetailFeature>
     
-     init(store: StoreOf<DetailFeature>) {
+    init(store: StoreOf<DetailFeature>) {
         self.store = store
     }
     
-     var body: some View {
+    var body: some View {
         List {
             ForEach(store.items, id: \.self) { item in
                 Button {
-                    send(.itemTapped(item))
+                    store.send(.view(.itemTapped(item)))
                 } label: {
                     Text(item)
                 }
@@ -23,7 +23,7 @@ struct DetailView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("閉じる") {
-                    store.send(.dismiss)
+                    store.send(.view(.dismissButtonTapped))
                 }
             }
         }

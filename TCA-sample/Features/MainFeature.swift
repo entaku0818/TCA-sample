@@ -2,26 +2,26 @@ import ComposableArchitecture
 import SwiftUI
 
 @Reducer
-public struct MainFeature {
+struct MainFeature {
     @ObservableState
-    public struct State: Equatable {
-        public var navigation: NavigationFeature.State
-        public var lists: [ListSection]
-        @Presents public var detail: DetailFeature.State?
+    struct State: Equatable {
+        var navigation: NavigationFeature.State
+        var lists: [ListSection]
+        @Presents var detail: DetailFeature.State?
         
-        public struct ListSection: Equatable, Identifiable {
-            public let id: String
-            public let title: String
-            public let items: [String]
+        struct ListSection: Equatable, Identifiable {
+            let id: String
+            let title: String
+            let items: [String]
             
-            public init(id: String, title: String, items: [String]) {
+            init(id: String, title: String, items: [String]) {
                 self.id = id
                 self.title = title
                 self.items = items
             }
         }
         
-        public init(
+        init(
             navigation: NavigationFeature.State = .init(),
             lists: [ListSection] = [
                 ListSection(id: "1", title: "アクション", items: ["アイテム1", "アイテム2", "アイテム3"]),
@@ -36,21 +36,20 @@ public struct MainFeature {
         }
     }
     
-    public enum Action: ViewAction, BindableAction, Sendable {
+    enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
         case navigation(NavigationFeature.Action)
         case detail(PresentationAction<DetailFeature.Action>)
         
-        public enum View: Equatable, Sendable {
+        enum View: Equatable, Sendable {
             case viewAllTapped(String)
-            case detailDismissed
         }
     }
     
-    public init() {}
+    init() {}
     
-    public var body: some ReducerOf<Self> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         
         Scope(state: \.navigation, action: \.navigation) {
@@ -72,10 +71,6 @@ public struct MainFeature {
                         title: list.title
                     )
                 }
-                return .none
-                
-            case .view(.detailDismissed):
-                state.detail = nil
                 return .none
                 
             case .detail:
