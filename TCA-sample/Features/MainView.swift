@@ -14,7 +14,7 @@ public struct MainView: View {
                 NavigationView(
                     store: store.scope(
                         state: \.navigation,
-                        action: MainFeature.Action.navigation
+                        action: \.navigation
                     )
                 )
                 
@@ -30,15 +30,13 @@ public struct MainView: View {
                 .padding()
             }
         }
-        .sheet(
+        .navigationDestination(
             store: store.scope(
                 state: \.$detail,
-                action: { .detail($0) }
+                action: \.detail
             )
         ) { store in
-            NavigationStack {
-                DetailView(store: store)
-            }
+            DetailView(store: store)
         }
     }
 } 
