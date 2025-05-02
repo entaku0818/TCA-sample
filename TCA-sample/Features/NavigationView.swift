@@ -9,36 +9,34 @@ public struct NavigationView: View {
     }
     
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            if viewStore.isEditing {
-                HStack {
-                    TextField("タイトル", text: viewStore.$title)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    Button("保存") {
-                        viewStore.send(.view(.saveButtonTapped))
-                    }
-                    
-                    Button("キャンセル") {
-                        viewStore.send(.view(.cancelButtonTapped))
-                    }
+        if store.isEditing {
+            HStack {
+                TextField("タイトル", text: $store.title)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                Button("保存") {
+                    store.send(.view(.saveButtonTapped))
                 }
-                .padding()
-            } else {
-                HStack {
-                    Text(viewStore.title)
-                        .font(.headline)
-                    
-                    Spacer()
-                    
-                    Button {
-                        viewStore.send(.view(.editButtonTapped))
-                    } label: {
-                        Image(systemName: "pencil")
-                    }
+                
+                Button("キャンセル") {
+                    store.send(.view(.cancelButtonTapped))
                 }
-                .padding()
             }
+            .padding()
+        } else {
+            HStack {
+                Text(store.title)
+                    .font(.headline)
+                
+                Spacer()
+                
+                Button {
+                    store.send(.view(.editButtonTapped))
+                } label: {
+                    Image(systemName: "pencil")
+                }
+            }
+            .padding()
         }
     }
 } 
