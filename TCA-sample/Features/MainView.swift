@@ -29,9 +29,14 @@ public struct MainView: View {
                 }
                 .padding()
             }
-            .navigationDestination(
-                item: store.scope(state: \.$detail, action: { .detail($0) })
-            ) { store in
+        }
+        .sheet(
+            store: store.scope(
+                state: \.$detail,
+                action: { .detail($0) }
+            )
+        ) { store in
+            NavigationStack {
                 DetailView(store: store)
             }
         }
