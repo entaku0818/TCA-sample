@@ -6,9 +6,11 @@ public struct NavigationFeature {
     @ObservableState
     public struct State: Equatable {
         public var title: String
+        public var isEditing: Bool
         
-        public init(title: String = "Navigation") {
+        public init(title: String = "Navigation", isEditing: Bool = false) {
             self.title = title
+            self.isEditing = isEditing
         }
     }
     
@@ -17,7 +19,10 @@ public struct NavigationFeature {
         case view(View)
         
         public enum View: Equatable, Sendable {
+            case editButtonTapped
             case titleChanged(String)
+            case saveButtonTapped
+            case cancelButtonTapped
         }
     }
     
@@ -31,8 +36,20 @@ public struct NavigationFeature {
             case .binding:
                 return .none
                 
+            case .view(.editButtonTapped):
+                state.isEditing = true
+                return .none
+                
             case let .view(.titleChanged(newTitle)):
                 state.title = newTitle
+                return .none
+                
+            case .view(.saveButtonTapped):
+                state.isEditing = false
+                return .none
+                
+            case .view(.cancelButtonTapped):
+                state.isEditing = false
                 return .none
             }
         }
