@@ -20,7 +20,6 @@ public struct NavigationFeature {
         
         public enum View: Equatable, Sendable {
             case editButtonTapped
-            case titleChanged(String)
             case saveButtonTapped
             case cancelButtonTapped
         }
@@ -38,10 +37,6 @@ public struct NavigationFeature {
                 
             case .view(.editButtonTapped):
                 state.isEditing = true
-                return .none
-                
-            case let .view(.titleChanged(newTitle)):
-                state.title = newTitle
                 return .none
                 
             case .view(.saveButtonTapped):

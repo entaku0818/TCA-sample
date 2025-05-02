@@ -12,11 +12,8 @@ public struct NavigationView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             if viewStore.isEditing {
                 HStack {
-                    TextField("タイトル", text: viewStore.binding(
-                        get: \.title,
-                        send: { .view(.titleChanged($0)) }
-                    ))
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("タイトル", text: viewStore.$title)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
                     Button("保存") {
                         viewStore.send(.view(.saveButtonTapped))
