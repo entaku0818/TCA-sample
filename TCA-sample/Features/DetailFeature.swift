@@ -14,12 +14,12 @@ public struct DetailFeature {
         }
     }
     
-    @ViewAction(for: DetailFeature.self)
     public enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
         case dismiss
         
+        @ViewAction(for: DetailFeature.self)
         public enum View: Equatable {
             case itemTapped(String)
         }

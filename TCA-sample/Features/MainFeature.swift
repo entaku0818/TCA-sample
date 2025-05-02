@@ -36,7 +36,6 @@ public struct MainFeature {
         }
     }
     
-    @ViewAction(for: MainFeature.self)
     public enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)

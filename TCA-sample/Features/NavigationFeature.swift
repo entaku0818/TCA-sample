@@ -14,11 +14,11 @@ public struct NavigationFeature {
         }
     }
     
-    @ViewAction(for: NavigationFeature.self)
     public enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
         
+        @ViewAction(for: NavigationFeature.self)
         public enum View: Equatable, Sendable {
             case editButtonTapped
             case saveButtonTapped
