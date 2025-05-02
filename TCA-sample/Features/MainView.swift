@@ -10,24 +10,34 @@ public struct MainView: View {
     
     public var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            VStack {
-                NavigationView(
-                    store: store.scope(
-                        state: \.navigation,
-                        action: MainFeature.Action.navigation
+            NavigationStack {
+                VStack {
+                    NavigationView(
+                        store: store.scope(
+                            state: \.navigation,
+                            action: MainFeature.Action.navigation
+                        )
                     )
-                )
-                
-                List {
-                    ForEach(viewStore.items, id: \.self) { item in
-                        Text(item)
+                    
+                    List {
+                        ForEach(viewStore.items, id: \.self) { item in
+                            Text(item)
+                        }
                     }
+                    
+                    Button("すべてを見る") {
+                        viewStore.send(.viewAllTapped)
+                    }
+                    .padding()
                 }
-                
-                Button("すべてを見る") {
-                    viewStore.send(.viewAllTapped)
+                .navigationDestination(
+                    store: store.scope(
+                        state: \.detail,
+                        action: MainFeature.Action.detail
+                    )
+                ) { detailStore in
+                    DetailView(store: detailStore)
                 }
-                .padding()
             }
         }
     }
