@@ -42,7 +42,7 @@ public struct MainFeature {
         case navigation(NavigationFeature.Action)
         case detail(PresentationAction<DetailFeature.Action>)
         
-        public enum View: Equatable {
+        public enum View: Equatable, Sendable {
             case viewAllTapped(String)
             case detailDismissed
         }
@@ -75,6 +75,10 @@ public struct MainFeature {
                 return .none
                 
             case .view(.detailDismissed):
+                state.detail = nil
+                return .none
+                
+            case .detail(.presented(.alert(.presented(.confirmDismiss)))):
                 state.detail = nil
                 return .none
                 

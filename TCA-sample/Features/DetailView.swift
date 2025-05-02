@@ -22,9 +22,10 @@ public struct DetailView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("閉じる") {
-                    store.send(.dismiss)
+                    store.send(.view(.dismissButtonTapped))
                 }
             }
         }
+        .alert(store: store.scope(state: \.$alert, action: \.alert))
     }
 } 
