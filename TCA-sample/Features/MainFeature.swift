@@ -37,7 +37,7 @@ public struct MainFeature {
     public var body: some ReducerOf<Self> {
         BindingReducer()
         
-        Scope(state: \.navigation, action: /Action.navigation) {
+        Scope(state: \.navigation, action: \.navigation) {
             NavigationFeature()
         }
         
@@ -61,7 +61,7 @@ public struct MainFeature {
                 return .none
             }
         }
-        .ifLet(\.$detail, action: /Action.detail) {
+        .ifLet(\.$detail, action: \.detail) {
             DetailFeature()
         }
     }
