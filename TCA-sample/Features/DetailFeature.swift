@@ -7,7 +7,6 @@ public struct DetailFeature {
     public struct State: Equatable {
         public var items: [String]
         public var title: String
-        @Presents public var alert: AlertState<AlertAction>?
         
         public init(items: [String], title: String = "詳細") {
             self.items = items
@@ -18,16 +17,10 @@ public struct DetailFeature {
     public enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
-        case alert(PresentationAction<AlertAction>)
+        case dismiss
         
         public enum View: Equatable {
             case itemTapped(String)
-            case dismissButtonTapped
-        }
-        
-        public enum AlertAction: Equatable {
-            case confirmDismiss
-            case cancelDismiss
         }
     }
     
@@ -44,32 +37,9 @@ public struct DetailFeature {
             case .view(.itemTapped):
                 return .none
                 
-            case .view(.dismissButtonTapped):
-                state.alert = AlertState {
-                    TextState("確認")
-                } actions: {
-                    ButtonState(role: .destructive, action: .confirmDismiss) {
-                        TextState("閉じる")
-                    }
-                    ButtonState(role: .cancel, action: .cancelDismiss) {
-                        TextState("キャンセル")
-                    }
-                } message: {
-                    TextState("画面を閉じますか？")
-                }
-                return .none
-                
-            case .alert(.presented(.confirmDismiss)):
-                return .none
-                
-            case .alert(.presented(.cancelDismiss)):
-                state.alert = nil
-                return .none
-                
-            case .alert:
+            case .dismiss:
                 return .none
             }
         }
-        .ifLet(\.$alert, action: \.alert)
     }
 } 

@@ -78,10 +78,6 @@ public struct MainFeature {
                 state.detail = nil
                 return .none
                 
-            case .detail(.presented(.alert(.presented(.confirmDismiss)))):
-                state.detail = nil
-                return .none
-                
             case .detail:
                 return .none
             }
