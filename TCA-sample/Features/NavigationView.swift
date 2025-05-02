@@ -2,7 +2,7 @@ import SwiftUI
 import ComposableArchitecture
 
 public struct NavigationView: View {
-    let store: StoreOf<NavigationFeature>
+    @Bindable var store: StoreOf<NavigationFeature>
     
     public init(store: StoreOf<NavigationFeature>) {
         self.store = store

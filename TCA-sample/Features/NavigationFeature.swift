@@ -14,6 +14,7 @@ public struct NavigationFeature {
         }
     }
     
+    @ViewAction(for: NavigationFeature.self)
     public enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
