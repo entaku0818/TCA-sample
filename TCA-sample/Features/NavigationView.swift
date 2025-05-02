@@ -9,10 +9,8 @@ public struct NavigationView: View {
     }
     
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            Text(viewStore.title)
-                .font(.headline)
-                .padding()
-        }
+        Text(store.title)
+            .font(.headline)
+            .padding()
     }
 } 

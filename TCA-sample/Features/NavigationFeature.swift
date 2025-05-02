@@ -1,6 +1,9 @@
 import ComposableArchitecture
+import SwiftUI
 
-public struct NavigationFeature: Reducer {
+@Reducer
+public struct NavigationFeature {
+    @ObservableState
     public struct State: Equatable {
         public var title: String
         
@@ -9,16 +12,26 @@ public struct NavigationFeature: Reducer {
         }
     }
     
-    public enum Action: Equatable {
-        case titleChanged(String)
+    public enum Action: ViewAction, BindableAction, Sendable {
+        case binding(BindingAction<State>)
+        case view(View)
+        
+        public enum View: Equatable {
+            case titleChanged(String)
+        }
     }
     
     public init() {}
     
     public var body: some ReducerOf<Self> {
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
-            case let .titleChanged(newTitle):
+            case .binding:
+                return .none
+                
+            case let .view(.titleChanged(newTitle)):
                 state.title = newTitle
                 return .none
             }

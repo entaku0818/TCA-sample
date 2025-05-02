@@ -9,17 +9,15 @@ public struct DetailView: View {
     }
     
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            List {
-                ForEach(viewStore.items, id: \.self) { item in
-                    Button {
-                        viewStore.send(.itemTapped(item))
-                    } label: {
-                        Text(item)
-                    }
+        List {
+            ForEach(store.items, id: \.self) { item in
+                Button {
+                    store.send(.view(.itemTapped(item)))
+                } label: {
+                    Text(item)
                 }
             }
-            .navigationTitle(viewStore.title)
         }
+        .navigationTitle(store.title)
     }
 } 
