@@ -17,6 +17,7 @@ public struct DetailFeature {
     public enum Action: ViewAction, BindableAction, Sendable {
         case binding(BindingAction<State>)
         case view(View)
+        case dismiss
         
         public enum View: Equatable {
             case itemTapped(String)
@@ -34,6 +35,9 @@ public struct DetailFeature {
                 return .none
                 
             case .view(.itemTapped):
+                return .none
+                
+            case .dismiss:
                 return .none
             }
         }

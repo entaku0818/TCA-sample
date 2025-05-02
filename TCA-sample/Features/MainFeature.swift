@@ -6,16 +6,32 @@ public struct MainFeature {
     @ObservableState
     public struct State: Equatable {
         public var navigation: NavigationFeature.State
-        public var items: [String]
+        public var lists: [ListSection]
         @Presents public var detail: DetailFeature.State?
+        
+        public struct ListSection: Equatable, Identifiable {
+            public let id: String
+            public let title: String
+            public let items: [String]
+            
+            public init(id: String, title: String, items: [String]) {
+                self.id = id
+                self.title = title
+                self.items = items
+            }
+        }
         
         public init(
             navigation: NavigationFeature.State = .init(),
-            items: [String] = ["Item 1", "Item 2", "Item 3"],
+            lists: [ListSection] = [
+                ListSection(id: "1", title: "アクション", items: ["アイテム1", "アイテム2", "アイテム3"]),
+                ListSection(id: "2", title: "コメディ", items: ["アイテム4", "アイテム5", "アイテム6"]),
+                ListSection(id: "3", title: "ドラマ", items: ["アイテム7", "アイテム8", "アイテム9"])
+            ],
             detail: DetailFeature.State? = nil
         ) {
             self.navigation = navigation
-            self.items = items
+            self.lists = lists
             self.detail = detail
         }
     }
@@ -27,7 +43,7 @@ public struct MainFeature {
         case detail(PresentationAction<DetailFeature.Action>)
         
         public enum View: Equatable {
-            case viewAllTapped
+            case viewAllTapped(String)
             case detailDismissed
         }
     }
@@ -49,8 +65,13 @@ public struct MainFeature {
             case .navigation:
                 return .none
                 
-            case .view(.viewAllTapped):
-                state.detail = DetailFeature.State(items: state.items)
+            case let .view(.viewAllTapped(listId)):
+                if let list = state.lists.first(where: { $0.id == listId }) {
+                    state.detail = .init(
+                        items: list.items,
+                        title: list.title
+                    )
+                }
                 return .none
                 
             case .view(.detailDismissed):

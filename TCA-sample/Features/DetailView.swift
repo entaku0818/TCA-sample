@@ -19,5 +19,12 @@ public struct DetailView: View {
             }
         }
         .navigationTitle(store.title)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("閉じる") {
+                    store.send(.dismiss)
+                }
+            }
+        }
     }
 } 
